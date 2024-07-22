@@ -59,7 +59,7 @@ public class DistortionTrap extends Trap{
 	}
 
 	private static final ArrayList<Class<?extends Mob>> RARE = new ArrayList<>(Arrays.asList(
-			Albino.class, CausticSlime.class,
+			Albino.class, AlbinoBat.class, CausticSlime.class,
 			Bandit.class,
 			ArmoredBrute.class, DM201.class,
 			Elemental.ChaosElemental.class, Senior.class,
