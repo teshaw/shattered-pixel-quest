@@ -81,7 +81,7 @@ public class InventoryPane extends Component {
 	private ArrayList<BagButton> bags;
 
 	public static final int WIDTH = 187;
-	public static final int HEIGHT = 82;
+	public static final int HEIGHT = 106;
 
 	private static final int SLOT_WIDTH = 17;
 	private static final int SLOT_HEIGHT = 24;
@@ -156,7 +156,7 @@ public class InventoryPane extends Component {
 		};
 
 		equipped = new ArrayList<>();
-		for (int i = 0; i < 5; i++){
+		for (int i = 0; i < 6; i++){
 			InventorySlot btn = new InventoryPaneSlot(null);
 			equipped.add(btn);
 			add(btn);
@@ -179,7 +179,7 @@ public class InventoryPane extends Component {
 		add(promptTxt);
 
 		bagItems = new ArrayList<>();
-		for (int i = 0; i < 20; i++){
+		for (int i = 0; i < 30; i++){
 			InventorySlot btn = new InventoryPaneSlot(null);
 			bagItems.add(btn);
 			add(btn);
@@ -307,6 +307,7 @@ public class InventoryPane extends Component {
 		equipped.get(2).item(stuff.artifact == null ? new WndBag.Placeholder( ItemSpriteSheet.ARTIFACT_HOLDER ) : stuff.artifact);
 		equipped.get(3).item(stuff.misc == null ? new WndBag.Placeholder( ItemSpriteSheet.SOMETHING ) : stuff.misc);
 		equipped.get(4).item(stuff.ring == null ? new WndBag.Placeholder( ItemSpriteSheet.RING_HOLDER ) : stuff.ring);
+		equipped.get(5).item(stuff.ring == null ? new WndBag.Placeholder( ItemSpriteSheet.RING_HOLDER ) : stuff.ring);
 
 		ArrayList<Item> items = (ArrayList<Item>) lastBag.items.clone();
 
