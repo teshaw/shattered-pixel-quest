@@ -176,11 +176,29 @@ public class TitleScene extends PixelScene {
 		};
 		btnAbout.icon(Icons.get(Icons.SHPX));
 		add(btnAbout);
-		
+
+
 		final int BTN_HEIGHT = 20;
 		int GAP = (int)(h - topRegion - (landscape() ? 3 : 4)*BTN_HEIGHT)/3;
 		GAP /= landscape() ? 3 : 5;
 		GAP = Math.max(GAP, 2);
+
+		if (ShatteredPixelDungeon.DEBUG) {
+        StyledButton btnDevTools = new StyledButton(GREY_TR, "Dev Tools") {
+            @Override
+            protected void onClick() {
+                ShatteredPixelDungeon.switchScene(DevScene.class);
+            }
+        };
+        btnDevTools.icon(Icons.get(Icons.PREFS)); // optional, change to any icon you want
+        add(btnDevTools);
+
+        if (landscape()) {
+            btnDevTools.setRect(btnAbout.left(), btnAbout.bottom() + GAP, btnAbout.width(), BTN_HEIGHT);
+        } else {
+            btnDevTools.setRect(btnAbout.left(), btnAbout.bottom() + GAP, btnAbout.width(), BTN_HEIGHT);
+        }
+        }
 
 		if (landscape()) {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);

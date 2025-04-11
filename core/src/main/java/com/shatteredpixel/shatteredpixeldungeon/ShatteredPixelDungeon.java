@@ -33,6 +33,9 @@ import com.watabou.utils.PlatformSupport;
 
 public class ShatteredPixelDungeon extends Game {
 
+    //debug sandbox mode
+    public static final boolean DEBUG = true;
+
 	//variable constants for specific older versions of shattered, used for data conversion
 	public static final int v1_2_3 = 628; //v1.2.3 is kept for now, for old rankings score logic
 
