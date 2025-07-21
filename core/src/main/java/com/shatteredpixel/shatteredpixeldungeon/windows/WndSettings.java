@@ -474,7 +474,7 @@ public class WndSettings extends WndTabbed {
 						ShatteredPixelDungeon.scene().addToFront(new Window(){
 
 							RenderedTextBlock barDesc;
-							RedButton btnSplit; RedButton btnGrouped; RedButton btnCentered;
+							RedButton btnSplit; RedButton btnGrouped; RedButton btnCentered; RedButton btnVertical;
 							CheckBox chkQuickSwapper;
 							RenderedTextBlock swapperDesc;
 							CheckBox chkFlipToolbar;
@@ -490,6 +490,7 @@ public class WndSettings extends WndTabbed {
 										textColor(TITLE_COLOR);
 										btnGrouped.textColor(WHITE);
 										btnCentered.textColor(WHITE);
+										btnVertical.textColor(WHITE);
 										SPDSettings.toolbarMode(Toolbar.Mode.SPLIT.name());
 										Toolbar.updateLayout();
 									}
@@ -505,6 +506,7 @@ public class WndSettings extends WndTabbed {
 										btnSplit.textColor(WHITE);
 										textColor(TITLE_COLOR);
 										btnCentered.textColor(WHITE);
+										btnVertical.textColor(WHITE);
 										SPDSettings.toolbarMode(Toolbar.Mode.GROUP.name());
 										Toolbar.updateLayout();
 									}
@@ -520,6 +522,7 @@ public class WndSettings extends WndTabbed {
 										btnSplit.textColor(WHITE);
 										btnGrouped.textColor(WHITE);
 										textColor(TITLE_COLOR);
+										btnVertical.textColor(WHITE);
 										SPDSettings.toolbarMode(Toolbar.Mode.CENTER.name());
 										Toolbar.updateLayout();
 									}
@@ -528,6 +531,22 @@ public class WndSettings extends WndTabbed {
 									btnCentered.textColor(TITLE_COLOR);
 								}
 								add(btnCentered);
+
+								btnVertical = new RedButton(Messages.get(WndSettings.UITab.this, "vertical")) {
+									@Override
+									protected void onClick() {
+										btnSplit.textColor(WHITE);
+										btnGrouped.textColor(WHITE);
+										btnCentered.textColor(WHITE);
+										textColor(TITLE_COLOR);
+										SPDSettings.toolbarMode(Toolbar.Mode.VERTICAL.name());
+										Toolbar.updateLayout();
+									}
+								};
+								if (SPDSettings.toolbarMode().equals(Toolbar.Mode.VERTICAL.name())) {
+									btnVertical.textColor(TITLE_COLOR);
+								}
+								add(btnVertical);
 
 								chkQuickSwapper = new CheckBox(Messages.get(WndSettings.UITab.this, "quickslot_swapper")) {
 									@Override
@@ -572,12 +591,13 @@ public class WndSettings extends WndTabbed {
 								barDesc.setPos((width - barDesc.width()) / 2f, GAP);
 								PixelScene.align(barDesc);
 
-								int btnWidth = (int) (width - 2 * GAP) / 3;
+								int btnWidth = (int) (width - 3 * GAP) / 4;
 								btnSplit.setRect(0, barDesc.bottom() + GAP, btnWidth, BTN_HEIGHT-2);
 								btnGrouped.setRect(btnSplit.right() + GAP, btnSplit.top(), btnWidth, BTN_HEIGHT-2);
 								btnCentered.setRect(btnGrouped.right() + GAP, btnSplit.top(), btnWidth, BTN_HEIGHT-2);
+								btnVertical.setRect(btnCentered.right() + GAP, btnSplit.top(), btnWidth, BTN_HEIGHT-2);
 
-								chkQuickSwapper.setRect(0, btnGrouped.bottom() + GAP, width, BTN_HEIGHT);
+								chkQuickSwapper.setRect(0, btnVertical.bottom() + GAP, width, BTN_HEIGHT);
 
 								swapperDesc.maxWidth(width);
 								swapperDesc.setPos(0, chkQuickSwapper.bottom()+1);
