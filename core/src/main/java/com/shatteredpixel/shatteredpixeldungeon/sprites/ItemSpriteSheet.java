@@ -62,6 +62,12 @@ public class ItemSpriteSheet {
 	public static final int SPELL_HOLDER    = PLACEHOLDERS+15;
 	public static final int MOB_HOLDER      = PLACEHOLDERS+16;
 	public static final int DOCUMENT_HOLDER = PLACEHOLDERS+17;
+	
+	// New equipment placeholders
+	public static final int HELM_HOLDER     = ARMOR_HOLDER; // Reuse armor holder for now
+	public static final int GAUNTLET_HOLDER = GAUNTLETS;    // Use existing gauntlet sprite
+	public static final int CLOAK_HOLDER    = ARTIFACT_CLOAK; // Use existing cloak sprite
+	
 	static{
 		assignItemRect(SOMETHING,       8,  13);
 		assignItemRect(WEAPON_HOLDER,   14, 14);

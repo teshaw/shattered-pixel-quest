@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.InventorySlot;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
@@ -231,6 +232,28 @@ public class WndBag extends WndTabbed {
 		);
 		PixelScene.align(txtTitle);
 		add( txtTitle );
+		
+		// Add equipment button only for main backpack and when selector is null (not in selection mode)
+		if (selector == null && bag == Dungeon.hero.belongings.backpack) {
+			IconButton equipmentButton = new IconButton(Icons.get(Icons.TALENT)) {
+				@Override
+				protected void onClick() {
+					super.onClick();
+					if (Game.scene() instanceof GameScene) {
+						GameScene.show(new WndEquipment());
+					} else {
+						Game.scene().addToFront(new WndEquipment());
+					}
+				}
+				
+				@Override
+				protected String hoverText() {
+					return Messages.get(WndEquipment.class, "title");
+				}
+			};
+			equipmentButton.setRect(titleWidth - 18, (TITLE_HEIGHT - 16) / 2f, 16, 16);
+			add(equipmentButton);
+		}
 	}
 	
 	protected void placeItems( Bag container ) {
@@ -242,8 +265,13 @@ public class WndBag extends WndTabbed {
 		placeItem( stuff.artifact != null ? stuff.artifact : new Placeholder( ItemSpriteSheet.ARTIFACT_HOLDER ) );
 		placeItem( stuff.misc != null ? stuff.misc : new Placeholder( ItemSpriteSheet.SOMETHING ) );
 		placeItem( stuff.ring != null ? stuff.ring : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
+		
+		// New equipment slots
+		placeItem( stuff.helm != null ? stuff.helm : new Placeholder( ItemSpriteSheet.HELM_HOLDER ) );
+		placeItem( stuff.gauntlets != null ? stuff.gauntlets : new Placeholder( ItemSpriteSheet.GAUNTLET_HOLDER ) );
+		placeItem( stuff.cloak != null ? stuff.cloak : new Placeholder( ItemSpriteSheet.CLOAK_HOLDER ) );
 
-		int equipped = 5;
+		int equipped = 8;
 
 		//the container itself if it's not the root backpack
 		if (container != Dungeon.hero.belongings.backpack){

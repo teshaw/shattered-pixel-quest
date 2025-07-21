@@ -84,6 +84,11 @@ public class Belongings implements Iterable<Item> {
 	public Artifact artifact = null;
 	public KindofMisc misc = null;
 	public Ring ring = null;
+	
+	// New equipment slots
+	public Armor helm = null;
+	public Armor gauntlets = null;
+	public Armor cloak = null;
 
 	//used when thrown weapons temporary become the current weapon
 	public KindOfWeapon thrownWeapon = null;
@@ -163,6 +168,30 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	public Armor helm(){
+		if (!lostInventory() || (helm != null && helm.keptThroughLostInventory())){
+			return helm;
+		} else {
+			return null;
+		}
+	}
+
+	public Armor gauntlets(){
+		if (!lostInventory() || (gauntlets != null && gauntlets.keptThroughLostInventory())){
+			return gauntlets;
+		} else {
+			return null;
+		}
+	}
+
+	public Armor cloak(){
+		if (!lostInventory() || (cloak != null && cloak.keptThroughLostInventory())){
+			return cloak;
+		} else {
+			return null;
+		}
+	}
+
 	// ***
 	
 	private static final String WEAPON		= "weapon";
@@ -172,6 +201,11 @@ public class Belongings implements Iterable<Item> {
 	private static final String RING       = "ring";
 
 	private static final String SECOND_WEP = "second_wep";
+	
+	// New equipment constants
+	private static final String HELM       = "helm";
+	private static final String GAUNTLETS  = "gauntlets";
+	private static final String CLOAK      = "cloak";
 
 	public void storeInBundle( Bundle bundle ) {
 		
@@ -183,6 +217,11 @@ public class Belongings implements Iterable<Item> {
 		bundle.put( MISC, misc );
 		bundle.put( RING, ring );
 		bundle.put( SECOND_WEP, secondWep );
+		
+		// Store new equipment
+		bundle.put( HELM, helm );
+		bundle.put( GAUNTLETS, gauntlets );
+		bundle.put( CLOAK, cloak );
 	}
 	
 	public void restoreFromBundle( Bundle bundle ) {
@@ -207,6 +246,16 @@ public class Belongings implements Iterable<Item> {
 
 		secondWep = (KindOfWeapon) bundle.get(SECOND_WEP);
 		if (secondWep() != null)    secondWep().activate(owner);
+		
+		// Restore new equipment
+		helm = (Armor) bundle.get(HELM);
+		if (helm() != null)         helm().activate( owner );
+		
+		gauntlets = (Armor) bundle.get(GAUNTLETS);
+		if (gauntlets() != null)    gauntlets().activate( owner );
+		
+		cloak = (Armor) bundle.get(CLOAK);
+		if (cloak() != null)        cloak().activate( owner );
 	}
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
@@ -368,6 +417,30 @@ public class Belongings implements Iterable<Item> {
 				Badges.validateItemLevelAquired(ring());
 			}
 		}
+		if (helm() != null) {
+			if (ShardOfOblivion.passiveIDDisabled()){
+				helm().setIDReady();
+			} else {
+				helm().identify();
+				Badges.validateItemLevelAquired(helm());
+			}
+		}
+		if (gauntlets() != null) {
+			if (ShardOfOblivion.passiveIDDisabled()){
+				gauntlets().setIDReady();
+			} else {
+				gauntlets().identify();
+				Badges.validateItemLevelAquired(gauntlets());
+			}
+		}
+		if (cloak() != null) {
+			if (ShardOfOblivion.passiveIDDisabled()){
+				cloak().setIDReady();
+			} else {
+				cloak().identify();
+				Badges.validateItemLevelAquired(cloak());
+			}
+		}
 		if (ShardOfOblivion.passiveIDDisabled()){
 			GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready_worn"));
 		}
@@ -380,7 +453,7 @@ public class Belongings implements Iterable<Item> {
 	}
 	
 	public void uncurseEquipped() {
-		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), artifact(), misc(), ring(), secondWep());
+		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), artifact(), misc(), ring(), secondWep(), helm(), gauntlets(), cloak());
 	}
 	
 	public Item randomUnequipped() {
@@ -412,7 +485,7 @@ public class Belongings implements Iterable<Item> {
 		
 		private Iterator<Item> backpackIterator = backpack.iterator();
 		
-		private Item[] equipped = {weapon, armor, artifact, misc, ring, secondWep};
+		private Item[] equipped = {weapon, armor, artifact, misc, ring, secondWep, helm, gauntlets, cloak};
 		private int backpackIndex = equipped.length;
 		
 		@Override
@@ -460,6 +533,15 @@ public class Belongings implements Iterable<Item> {
 				break;
 			case 5:
 				equipped[5] = secondWep = null;
+				break;
+			case 6:
+				equipped[6] = helm = null;
+				break;
+			case 7:
+				equipped[7] = gauntlets = null;
+				break;
+			case 8:
+				equipped[8] = cloak = null;
 				break;
 			default:
 				backpackIterator.remove();
