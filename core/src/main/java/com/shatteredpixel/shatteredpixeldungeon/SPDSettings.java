@@ -195,7 +195,7 @@ public class SPDSettings extends GameSettings {
 	}
 	
 	public static String toolbarMode() {
-		return getString(KEY_BARMODE, PixelScene.landscape() ? "GROUP" : "SPLIT");
+		return getString(KEY_BARMODE, PixelScene.landscape() ? "GROUP" : "VERTICAL");
 	}
 
 	public static void quickslotWaterskin( boolean value ){

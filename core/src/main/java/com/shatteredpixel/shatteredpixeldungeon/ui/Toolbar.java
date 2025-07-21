@@ -76,7 +76,8 @@ public class Toolbar extends Component {
 	public enum Mode {
 		SPLIT,
 		GROUP,
-		CENTER
+		CENTER,
+		VERTICAL
 	}
 	
 	public Toolbar() {
@@ -561,7 +562,7 @@ public class Toolbar extends Component {
 			mode = Mode.valueOf(SPDSettings.toolbarMode());
 		} catch (Exception e){
 			Game.reportException(e);
-			mode = PixelScene.landscape() ? Mode.GROUP : Mode.SPLIT;
+			mode = PixelScene.landscape() ? Mode.GROUP : Mode.VERTICAL;
 		}
 		switch(mode){
 			case SPLIT:
@@ -581,6 +582,27 @@ public class Toolbar extends Component {
 				if (btnSwap.visible){
 					btnSwap.setPos(btnQuick[endingSlot].left() - (btnSwap.width()-2), y+3);
 					shift = btnSearch.right() - btnSwap.left();
+				}
+
+				break;
+
+			case VERTICAL:
+				// Position main buttons horizontally at bottom
+				btnWait.setPos(x, y);
+				btnSearch.setPos(btnWait.right(), y);
+				btnInventory.setPos(right - btnInventory.width(), y);
+
+				// Position quickslots vertically along the right edge
+				float quickslotX = right - 26; // Position near right edge
+				float quickslotY = 10; // Start near top of screen
+				float quickslotSpacing = 28; // Vertical spacing between buttons
+
+				for (int i = startingSlot; i <= endingSlot; i++) {
+					btnQuick[i].setPos(quickslotX, quickslotY + (i - startingSlot) * quickslotSpacing);
+				}
+
+				if (btnSwap.visible){
+					btnSwap.setPos(quickslotX, quickslotY + (endingSlot - startingSlot + 1) * quickslotSpacing);
 				}
 
 				break;
@@ -613,7 +635,7 @@ public class Toolbar extends Component {
 				break;
 		}
 
-		if (shift > 0){
+		if (shift > 0 && mode != Mode.VERTICAL){
 			shift /= 2; //we want to center;
 			for (int i = startingSlot; i <= endingSlot; i++) {
 				btnQuick[i].setPos(btnQuick[i].left()+shift,  btnQuick[i].top());
@@ -625,7 +647,7 @@ public class Toolbar extends Component {
 
 		right = width;
 
-		if (SPDSettings.flipToolbar()) {
+		if (SPDSettings.flipToolbar() && mode != Mode.VERTICAL) {
 
 			btnWait.setPos( (right - btnWait.right()), y);
 			btnSearch.setPos( (right - btnSearch.right()), y);
