@@ -800,7 +800,7 @@ public class Generator {
 	}
 	
 	public static Armor randomEquipment(int floorSet) {
-		Armor e = (Armor)Reflection.newInstance(Category.EQUIPMENT.classes[Random.index(Category.EQUIPMENT.classes.length)]);
+		Armor e = (Armor)Reflection.newInstance(Category.EQUIPMENT.classes[Random.chances(Category.EQUIPMENT.probs)]);
 		e.random();
 		return e;
 	}
