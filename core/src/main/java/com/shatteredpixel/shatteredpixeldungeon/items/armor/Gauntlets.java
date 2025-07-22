@@ -64,7 +64,6 @@ public class Gauntlets extends Armor {
 			
 			activate( hero );
 			Talent.onItemEquipped(hero, this);
-			Statistics.itemsEquipped++;
 			return true;
 			
 		} else {

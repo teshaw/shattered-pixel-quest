@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.InventorySlot;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.Game;
+import com.watabou.noosa.Image;
 
 public class WndEquipment extends Window {
 	
@@ -61,7 +62,7 @@ public class WndEquipment extends Window {
 		add(title);
 		
 		// Hero sprite in center
-		HeroSprite heroSprite = HeroSprite.avatar(hero);
+		Image heroSprite = HeroSprite.avatar(hero);
 		heroSprite.scale.set(2.0f);
 		heroSprite.x = (WIDTH - HERO_SIZE) / 2;
 		heroSprite.y = title.bottom() + 8;
