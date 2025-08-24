@@ -23,9 +23,12 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.Cloak;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClericArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.DuelistArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.Gauntlets;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.Helm;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.HuntressArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.LeatherArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MageArmor;
@@ -227,6 +230,7 @@ public class Generator {
 		WEP_T5	( 0, 0, MeleeWeapon.class),
 		
 		ARMOR	( 2, 1, Armor.class ),
+		EQUIPMENT ( 1, 1, Armor.class ), // New equipment category for helm, gauntlets, cloak
 		
 		MISSILE ( 1, 2, MissileWeapon.class ),
 		MIS_T1  ( 0, 0, MissileWeapon.class ),
@@ -487,6 +491,14 @@ public class Generator {
 			};
 			ARMOR.probs = new float[]{ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
 			
+			//New equipment items
+			EQUIPMENT.classes = new Class<?>[]{
+					Helm.class,
+					Gauntlets.class,
+					Cloak.class
+			};
+			EQUIPMENT.probs = new float[]{ 1, 1, 1 };
+			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};
 			MISSILE.probs = new float[]{};
@@ -695,6 +707,8 @@ public class Generator {
 		switch (cat) {
 			case ARMOR:
 				return randomArmor();
+			case EQUIPMENT:
+				return randomEquipment();
 			case WEAPON:
 				return randomWeapon();
 			case MISSILE:
@@ -779,6 +793,16 @@ public class Generator {
 		Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(floorSetTierProbs[floorSet])]);
 		a.random();
 		return a;
+	}
+	
+	public static Armor randomEquipment(){
+		return randomEquipment(Dungeon.depth / 5);
+	}
+	
+	public static Armor randomEquipment(int floorSet) {
+		Armor e = (Armor)Reflection.newInstance(Category.EQUIPMENT.classes[Random.chances(Category.EQUIPMENT.probs)]);
+		e.random();
+		return e;
 	}
 
 	public static final Category[] wepTiers = new Category[]{

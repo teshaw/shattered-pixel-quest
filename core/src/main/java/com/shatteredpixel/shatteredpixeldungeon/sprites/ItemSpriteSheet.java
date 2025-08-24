@@ -62,6 +62,10 @@ public class ItemSpriteSheet {
 	public static final int SPELL_HOLDER    = PLACEHOLDERS+15;
 	public static final int MOB_HOLDER      = PLACEHOLDERS+16;
 	public static final int DOCUMENT_HOLDER = PLACEHOLDERS+17;
+	
+	// New equipment placeholders - moved after base constants are defined
+	public static final int HELM_HOLDER     = ARMOR_HOLDER; // Reuse armor holder for now
+	
 	static{
 		assignItemRect(SOMETHING,       8,  13);
 		assignItemRect(WEAPON_HOLDER,   14, 14);
@@ -287,6 +291,9 @@ public class ItemSpriteSheet {
 	public static final int GREATSHIELD     = WEP_TIER5+4;
 	public static final int GAUNTLETS       = WEP_TIER5+5;
 	public static final int WAR_SCYTHE      = WEP_TIER5+6;
+	
+	// Equipment placeholder for gauntlets (after GAUNTLETS is defined)
+	public static final int GAUNTLET_HOLDER = GAUNTLETS;
 	static{
 		assignItemRect(GREATSWORD,  16, 16);
 		assignItemRect(WAR_HAMMER,  16, 16);
@@ -433,6 +440,9 @@ public class ItemSpriteSheet {
 	private static final int ARTIFACTS          =                            xy(1, 16);  //24 slots
 	public static final int ARTIFACT_CLOAK      = ARTIFACTS+0;
 	public static final int ARTIFACT_ARMBAND    = ARTIFACTS+1;
+	
+	// Equipment placeholder for cloak (after ARTIFACT_CLOAK is defined)
+	public static final int CLOAK_HOLDER         = ARTIFACT_CLOAK;
 	public static final int ARTIFACT_CAPE       = ARTIFACTS+2;
 	public static final int ARTIFACT_TALISMAN   = ARTIFACTS+3;
 	public static final int ARTIFACT_HOURGLASS  = ARTIFACTS+4;
